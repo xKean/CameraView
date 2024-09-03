@@ -1,14 +1,3 @@
-//
-//  DefaultCameraView.swift of MijickCameraView
-//
-//  Created by Tomasz Kurylik
-//    - Twitter: https://twitter.com/tkurylik
-//    - Mail: tomasz.kurylik@mijick.com
-//    - GitHub: https://github.com/FulcrumOne
-//
-//  Copyright ©2024 Mijick. Licensed under MIT License.
-
-
 import SwiftUI
 
 public struct DefaultCameraView: MCameraView {
@@ -16,7 +5,6 @@ public struct DefaultCameraView: MCameraView {
     public let namespace: Namespace.ID
     public let closeControllerAction: () -> ()
     var config: Config = .init()
-
 
     public var body: some View {
         VStack(spacing: 0) {
@@ -33,7 +21,6 @@ public struct DefaultCameraView: MCameraView {
         .animation(.defaultSpring, value: hasTorch)
         .animation(.defaultSpring, value: iconAngle)
     }
-
 }
 private extension DefaultCameraView {
     func createTopView() -> some View {
@@ -49,17 +36,11 @@ private extension DefaultCameraView {
     }
     func createContentView() -> some View {
         ZStack {
-            createRotatedCameraView()
+            createCameraView()
+                .rotationEffect(iconAngle) // Rotate only the camera view
             //createOutputTypeButtons()
         }
     }
-
-    func createRotatedCameraView() -> some View {
-        createCameraView()
-            .rotationEffect(deviceOrientation.getAngle())
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
     func createBottomView() -> some View {
         ZStack {
             createTorchButton()
@@ -86,14 +67,11 @@ private extension DefaultCameraView {
         .isActive(config.outputTypePickerVisible)
         .frame(maxHeight: .infinity, alignment: .bottom)
         .padding(.bottom, 8)
-         
     }
-     
 }
 private extension DefaultCameraView {
     func createCloseButton() -> some View {
         CloseButton(action: closeControllerAction)
-            .rotationEffect(iconAngle)
             .frame(maxWidth: .infinity, alignment: .leading)
             .isActive(!isRecording)
     }
@@ -116,18 +94,15 @@ private extension DefaultCameraView {
 private extension DefaultCameraView {
     func createGridButton() -> some View {
         TopButton(icon: gridButtonIcon, action: changeGridVisibility)
-            .rotationEffect(iconAngle)
             .isActiveStackElement(config.gridButtonVisible)
     }
     func createFlipOutputButton() -> some View {
         TopButton(icon: flipButtonIcon, action: changeMirrorOutput)
-            .rotationEffect(iconAngle)
             .isActiveStackElement(cameraPosition == .front)
             .isActiveStackElement(config.flipButtonVisible)
     }
     func createFlashButton() -> some View {
         TopButton(icon: flashButtonIcon, action: changeFlashMode)
-            .rotationEffect(iconAngle)
             .isActiveStackElement(hasFlash)
             .isActiveStackElement(outputType == .photo)
             .isActiveStackElement(config.flashButtonVisible)
@@ -137,7 +112,6 @@ private extension DefaultCameraView {
     func createTorchButton() -> some View {
         BottomButton(icon: "icon-torch", active: torchMode == .on, action: changeTorchMode)
             .matchedGeometryEffect(id: "button-bottom-left", in: namespace)
-            .rotationEffect(iconAngle)
             .frame(maxWidth: .infinity, alignment: .leading)
             .isActive(hasTorch)
             .isActive(config.torchButtonVisible)
@@ -148,14 +122,12 @@ private extension DefaultCameraView {
     func createChangeCameraButton() -> some View {
         BottomButton(icon: "icon-change-camera", active: false, action: changeCameraPosition)
             .matchedGeometryEffect(id: "button-bottom-right", in: namespace)
-            .rotationEffect(iconAngle)
             .frame(maxWidth: .infinity, alignment: .trailing)
             .isActive(!isRecording)
             .isActive(config.changeCameraButtonVisible)
     }
     func createOutputTypeButton(_ cameraOutputType: CameraOutputType) -> some View {
         OutputTypeButton(type: cameraOutputType, active: cameraOutputType == outputType, action: { changeCameraOutputType(cameraOutputType) })
-            .rotationEffect(iconAngle)
     }
 }
 private extension DefaultCameraView {
@@ -214,11 +186,9 @@ extension DefaultCameraView { struct Config {
     var flashButtonVisible: Bool = true
 }}
 
-
 // MARK: - CloseButton
 fileprivate struct CloseButton: View {
     let action: () -> ()
-
 
     var body: some View {
         Button(action: action) {
@@ -234,7 +204,6 @@ fileprivate struct CloseButton: View {
 fileprivate struct TopButton: View {
     let icon: String
     let action: () -> ()
-
 
     var body: some View {
         Button(action: action, label: createButtonLabel)
@@ -267,7 +236,6 @@ fileprivate struct CaptureButton: View {
     let action: () -> ()
     let mode: CameraOutputType
     let isRecording: Bool
-
 
     var body: some View {
         Button(action: action, label: createButtonLabel).buttonStyle(ButtonScaleStyle())
@@ -312,7 +280,6 @@ fileprivate struct BottomButton: View {
     let active: Bool
     let action: () -> ()
 
-
     var body: some View {
         Button(action: action, label: createButtonLabel)
             .buttonStyle(ButtonScaleStyle())
@@ -350,7 +317,6 @@ fileprivate struct OutputTypeButton: View {
     let type: CameraOutputType
     let active: Bool
     let action: () -> ()
-
 
     var body: some View {
         Button(action: action, label: createButtonLabel).buttonStyle(ButtonScaleStyle())
