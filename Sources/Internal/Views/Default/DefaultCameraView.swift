@@ -33,6 +33,7 @@ public struct DefaultCameraView: MCameraView {
         .animation(.defaultSpring, value: hasTorch)
         .animation(.defaultSpring, value: iconAngle)
     }
+
 }
 private extension DefaultCameraView {
     func createTopView() -> some View {
@@ -48,10 +49,17 @@ private extension DefaultCameraView {
     }
     func createContentView() -> some View {
         ZStack {
-            createCameraView()
+            createRotatedCameraView()
             //createOutputTypeButtons()
         }
     }
+
+    func createRotatedCameraView() -> some View {
+        createCameraView()
+            .rotationEffect(deviceOrientation.getAngle())
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
     func createBottomView() -> some View {
         ZStack {
             createTorchButton()
