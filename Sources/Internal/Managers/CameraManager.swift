@@ -779,7 +779,7 @@ private extension CameraManager {
 }
 private extension CameraManager {
     func getNewUserBlockedScreenRotation() -> Bool { switch attributes.deviceOrientation.rawValue == UIDevice.current.orientation.rawValue {
-        case true: false
+        case true: true
         //case false: !orientationLocked
         case false: orientationLocked
     }}
