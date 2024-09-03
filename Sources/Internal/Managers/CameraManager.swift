@@ -762,7 +762,7 @@ private extension CameraManager {
         default: attributes.deviceOrientation
     }}
     func updateDeviceOrientation(_ newDeviceOrientation: AVCaptureVideoOrientation) { if newDeviceOrientation != attributes.deviceOrientation {
-        //attributes.deviceOrientation = newDeviceOrientation
+        attributes.deviceOrientation = newDeviceOrientation
     }}
     func updateUserBlockedScreenRotation() {
         let newUserBlockedScreenRotation = getNewUserBlockedScreenRotation()
@@ -781,7 +781,7 @@ private extension CameraManager {
         case false: !orientationLocked
     }}
     func updateUserBlockedScreenRotation(_ newUserBlockedScreenRotation: Bool) { if newUserBlockedScreenRotation != attributes.userBlockedScreenRotation {
-        attributes.userBlockedScreenRotation = newUserBlockedScreenRotation
+        //attributes.userBlockedScreenRotation = newUserBlockedScreenRotation
     }}
     func getNewFrameOrientation(_ orientation: UIDeviceOrientation) -> CGImagePropertyOrientation { switch attributes.cameraPosition {
         case .back: getNewFrameOrientationForBackCamera(orientation)
