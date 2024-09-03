@@ -1,6 +1,15 @@
 {
-  "originHash" : "405726382b71b67dc918ba4846070e34388691f74032a9ca72a68f3739774f06",
+  "originHash" : "f9d88ae9841f5958c75cd33eed7693d345753714b7049d8fa0215fe31b144050",
   "pins" : [
+    {
+      "identity" : "tiltkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/chaert-s/TiltKit.git",
+      "state" : {
+        "revision" : "c17e0e0a146a976edd9376f1a98e757780505a9b",
+        "version" : "1.2.0"
+      }
+    },
     {
       "identity" : "timer",
       "kind" : "remoteSourceControl",

@@ -12,9 +12,17 @@ let package = Package(
         .library(name: "MijickCameraView", targets: ["MijickCameraView"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Mijick/Timer", from: "1.0.1")
+        .package(url: "https://github.com/Mijick/Timer", from: "1.0.1"),
+        .package(url: "https://github.com/chaert-s/TiltKit.git", .upToNextMajor(from: "1.2.0"))
     ],
     targets: [
-        .target(name: "MijickCameraView", dependencies: [.product(name: "MijickTimer", package: "Timer")], path: "Sources")
+        .target(
+            name: "MijickCameraView",
+            dependencies: [
+                .product(name: "MijickTimer", package: "Timer"),
+                .product(name: "TiltKit", package: "TiltKit")
+            ],
+            path: "Sources"
+        )
     ]
 )

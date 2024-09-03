@@ -37,32 +37,40 @@ public struct DefaultCameraView: MCameraView {
 private extension DefaultCameraView {
     func createTopView() -> some View {
         ZStack {
-            createCloseButton()
-            createTopCentreView()
-            createTopRightView()
+            Color.black.opacity(0.7) // Add a 70% transparent black background
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            ZStack {
+                createCloseButton()
+                createTopCentreView()
+                createTopRightView()
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 4)
+            .padding(.bottom, 12)
+            .padding(.horizontal, 20)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.top, 4)
-        .padding(.bottom, 12)
-        .padding(.horizontal, 20)
     }
     func createContentView() -> some View {
         ZStack {
             createCameraView()
-            createOutputTypeButtons()
+            //createOutputTypeButtons()
         }
     }
     func createBottomView() -> some View {
-        ZStack {
-            createTorchButton()
-            createCaptureButton()
-            createChangeCameraButton()
+            ZStack {
+                Color.black.opacity(0.7) // Add a 70% transparent black background
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                ZStack {
+                    createTorchButton()
+                    createCaptureButton()
+                    createChangeCameraButton()
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+                .padding(.horizontal, 32)
+            }
         }
-        .frame(maxWidth: .infinity)
-        .padding(.top, 16)
-        .padding(.bottom, 12)
-        .padding(.horizontal, 32)
-    }
 }
 private extension DefaultCameraView {
     func createOutputTypeButtons() -> some View {
