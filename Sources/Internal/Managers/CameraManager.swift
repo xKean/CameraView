@@ -748,7 +748,7 @@ extension CameraManager: AVCaptureFileOutputRecordingDelegate {
 private extension CameraManager {
     func handleAccelerometerUpdates(_ data: CMAccelerometerData?, _ error: Swift.Error?) { if let data, error == nil {
         let newDeviceOrientation = fetchDeviceOrientation(data.acceleration)
-        //updateDeviceOrientation(newDeviceOrientation)
+        updateDeviceOrientation(newDeviceOrientation)
         //updateUserBlockedScreenRotation()
         //updateFrameOrientation()
     }}
