@@ -49,7 +49,7 @@ private extension DefaultCameraView {
     func createContentView() -> some View {
         ZStack {
             createCameraView()
-            createOutputTypeButtons()
+            //createOutputTypeButtons()
         }
     }
     func createBottomView() -> some View {
@@ -78,7 +78,9 @@ private extension DefaultCameraView {
         .isActive(config.outputTypePickerVisible)
         .frame(maxHeight: .infinity, alignment: .bottom)
         .padding(.bottom, 8)
+         
     }
+     
 }
 private extension DefaultCameraView {
     func createCloseButton() -> some View {
