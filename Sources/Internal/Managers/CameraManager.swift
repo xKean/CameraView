@@ -78,6 +78,8 @@ public class CameraManager: NSObject, ObservableObject { init(_ attributes: Attr
     private(set) var frameOrientation: CGImagePropertyOrientation = .right
     private(set) var orientationLocked: Bool = false
     private(set) var initialAttributes: Attributes
+    
+    private var lockedOrientation : UIDeviceOrientation?
 }
 
 // MARK: - Cancellation
@@ -302,8 +304,11 @@ private extension CameraManager {
 extension CameraManager {
     func lockOrientation() {
         orientationLocked = true
+        lockedOrientation = UIDevice.current.orientation
     }
 }
+
+
 
 // MARK: - Camera Rotation
 extension CameraManager {
@@ -651,6 +656,50 @@ private extension CameraManager {
         performCaptureAnimation()
     }
 }
+
+extension CameraManager: AVCapturePhotoCaptureDelegate {
+    public func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Swift.Error)?) {
+        let orientation = lockedOrientation ?? UIDevice.current.orientation
+        let imageOrientation = orientation.toImageOrientation(forCameraPosition: attributes.cameraPosition).toCGImagePropertyOrientation
+        attributes.capturedMedia = .create(imageData: photo, orientation: imageOrientation, filters: attributes.cameraFilters)
+    }
+}
+
+extension UIImage.Orientation {
+    var toCGImagePropertyOrientation: CGImagePropertyOrientation {
+        switch self {
+        case .up: return .up
+        case .down: return .down
+        case .left: return .left
+        case .right: return .right
+        case .upMirrored: return .upMirrored
+        case .downMirrored: return .downMirrored
+        case .leftMirrored: return .leftMirrored
+        case .rightMirrored: return .rightMirrored
+        @unknown default: return .up
+        }
+    }
+}
+
+private extension UIDeviceOrientation {
+    func toImageOrientation(forCameraPosition position: CameraPosition) -> UIImage.Orientation {
+        switch self {
+        case .portrait:
+            return position == .back ? .right : .leftMirrored
+        case .portraitUpsideDown:
+            return position == .back ? .left : .rightMirrored
+        case .landscapeLeft:
+            return position == .back ? .up : .downMirrored
+        case .landscapeRight:
+            return position == .back ? .down : .upMirrored
+        default:
+            return position == .back ? .right : .leftMirrored
+        }
+    }
+}
+
+
+
 private extension CameraManager {
     func getPhotoOutputSettings() -> AVCapturePhotoSettings {
         let settings = AVCapturePhotoSettings()
@@ -682,11 +731,6 @@ private extension CameraManager {
     var captureAnimationDuration: Double { 0.1 }
 }
 
-extension CameraManager: AVCapturePhotoCaptureDelegate {
-    public func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Swift.Error)?) {
-        attributes.capturedMedia = .create(imageData: photo, orientation: frameOrientation, filters: attributes.cameraFilters)
-    }
-}
 
 // MARK: Video
 private extension CameraManager {
@@ -749,8 +793,8 @@ private extension CameraManager {
     func handleAccelerometerUpdates(_ data: CMAccelerometerData?, _ error: Swift.Error?) { if let data, error == nil {
         let newDeviceOrientation = fetchDeviceOrientation(data.acceleration)
         updateDeviceOrientation(newDeviceOrientation)
-        //updateUserBlockedScreenRotation()
-        //updateFrameOrientation()
+        updateUserBlockedScreenRotation()
+        updateFrameOrientation()
     }}
 }
 private extension CameraManager {
@@ -963,3 +1007,5 @@ public extension CameraManager { enum Error: Swift.Error {
     case cannotSetupInput, cannotSetupOutput, capturedPhotoCannotBeFetched
     case incorrectFrameRate
 }}
+
+
