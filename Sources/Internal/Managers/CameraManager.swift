@@ -301,7 +301,7 @@ private extension CameraManager {
 // MARK: - Locking Camera Orientation
 extension CameraManager {
     func lockOrientation() {
-        orientationLocked = true
+        //orientationLocked = true
     }
 }
 
