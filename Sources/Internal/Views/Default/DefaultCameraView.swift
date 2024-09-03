@@ -26,7 +26,7 @@ public struct DefaultCameraView: MCameraView {
         }
         .ignoresSafeArea(.all, edges: .horizontal)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.background.ignoresSafeArea().opacity(0.3))
+        .background(Color.background.ignoresSafeArea())
         .statusBarHidden()
         .animation(.defaultSpring, value: isRecording)
         .animation(.defaultSpring, value: outputType)
