@@ -12,6 +12,7 @@
 import SwiftUI
 
 public struct MCameraController: View {
+    //test!
     @ObservedObject var cameraManager: CameraManager
     @Namespace var namespace
     var config: CameraConfig = .init()
