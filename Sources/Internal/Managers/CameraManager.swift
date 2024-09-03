@@ -787,11 +787,11 @@ private extension CameraManager {
         case .back: getNewFrameOrientationForBackCamera(orientation)
         case .front: getNewFrameOrientationForFrontCamera(orientation)
     }}
-    func updateFrameOrientation(_ newFrameOrientation: CGImagePropertyOrientation) { if newFrameOrientation != frameOrientation {/*
+    func updateFrameOrientation(_ newFrameOrientation: CGImagePropertyOrientation) { if newFrameOrientation != frameOrientation {
         let shouldAnimate = shouldAnimateFrameOrientationChange(newFrameOrientation) && isRunning
 
         animateFrameOrientationChangeIfNeeded(shouldAnimate)
-        changeFrameOrientation(shouldAnimate, newFrameOrientation)*/
+        changeFrameOrientation(shouldAnimate, newFrameOrientation)
     }}
 }
 private extension CameraManager {
