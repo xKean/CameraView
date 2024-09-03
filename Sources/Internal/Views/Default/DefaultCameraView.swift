@@ -26,7 +26,7 @@ public struct DefaultCameraView: MCameraView {
         }
         .ignoresSafeArea(.all, edges: .horizontal)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.background.ignoresSafeArea())
+        .background(Color.background.ignoresSafeArea().opacity(0.3))
         .statusBarHidden()
         .animation(.defaultSpring, value: isRecording)
         .animation(.defaultSpring, value: outputType)
@@ -37,18 +37,14 @@ public struct DefaultCameraView: MCameraView {
 private extension DefaultCameraView {
     func createTopView() -> some View {
         ZStack {
-            Color.black.opacity(0.7) // Add a 70% transparent black background
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            ZStack {
-                createCloseButton()
-                createTopCentreView()
-                createTopRightView()
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.top, 4)
-            .padding(.bottom, 12)
-            .padding(.horizontal, 20)
+            createCloseButton()
+            createTopCentreView()
+            createTopRightView()
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 4)
+        .padding(.bottom, 12)
+        .padding(.horizontal, 20)
     }
     func createContentView() -> some View {
         ZStack {
@@ -57,20 +53,16 @@ private extension DefaultCameraView {
         }
     }
     func createBottomView() -> some View {
-            ZStack {
-                Color.black.opacity(0.7) // Add a 70% transparent black background
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                ZStack {
-                    createTorchButton()
-                    createCaptureButton()
-                    createChangeCameraButton()
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.top, 16)
-                .padding(.bottom, 12)
-                .padding(.horizontal, 32)
-            }
+        ZStack {
+            createTorchButton()
+            createCaptureButton()
+            createChangeCameraButton()
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 16)
+        .padding(.bottom, 12)
+        .padding(.horizontal, 32)
+    }
 }
 private extension DefaultCameraView {
     func createOutputTypeButtons() -> some View {
