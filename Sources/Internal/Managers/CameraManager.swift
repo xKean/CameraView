@@ -28,7 +28,7 @@ public class CameraManager: NSObject, ObservableObject { init(_ attributes: Attr
         var torchMode: CameraTorchMode = .off
         var cameraExposure: CameraExposure = .init()
         var hdrMode: CameraHDRMode = .auto
-        var resolution: AVCaptureSession.Preset = .hd1920x1080
+        var resolution: AVCaptureSession.Preset = .high
         var frameRate: Int32 = 30
         var mirrorOutput: Bool = false
         var isGridVisible: Bool = true
