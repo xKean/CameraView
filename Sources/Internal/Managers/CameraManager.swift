@@ -948,7 +948,7 @@ private extension CameraManager {
     }
 }
 private extension CameraManager {
-    var cameraView: UIView { cameraLayer.superview ?? .init() }
+    var cameraView: UIView { cameraLayer?.superview ?? .init() }
     var isChanging: Bool { (cameraBlurView?.alpha ?? 0) > 0 }
 }
 
